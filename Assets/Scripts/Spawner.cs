@@ -8,6 +8,10 @@ using Random = UnityEngine.Random;
 
 public class Spawner : MonoBehaviour
 {
+
+    public int ParentCount;
+    public int ChildCout;
+    
     public ChildRaycastScript raycaster;
     // Start is called before the first frame update
     void Start()
@@ -48,7 +52,7 @@ public class Spawner : MonoBehaviour
 
         }
         
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < ParentCount; i++)
         {
             var tempEnt = em.Instantiate(blobs[0]);
             var randX = Random.Range(0, 1000);
@@ -61,7 +65,7 @@ public class Spawner : MonoBehaviour
             tempList.Add(tempEnt);
         }
         
-        for (int i = 0; i < 50; i++)
+        for (int i = 0; i < ChildCout; i++)
         {
             var tempEnt = em.Instantiate(blobs[1]);
             var randX = Random.Range(0, 1000);
