@@ -30,7 +30,6 @@ public class Spawner : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             raycaster.CastRays();
-
         }
     }
 
