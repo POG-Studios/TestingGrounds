@@ -1,3 +1,4 @@
+using System;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -8,6 +9,14 @@ using UnityEngine;
 
 public partial class SetupBlobAssets : SystemBase
 {
+    /*public void Dispose()
+    {
+        blobArray.Dispose();
+        blobHashmap.Dispose();
+        __query_0.Dispose();
+        __query_1.Dispose();
+    }*/
+
     private BlobManager blobManager;
     public NativeArray<Entity> blobArray;
 
@@ -41,20 +50,26 @@ public partial class SetupBlobAssets : SystemBase
 
         miscBlobs[0] = blobManager.parent;
         blobArray[0] = miscBlobs[0];
-        blobHashmap.Add(1, blobArray[0]);
+        blobHashmap.Add(0, blobArray[0]);
         
         miscBlobs[1] = blobManager.child;
         blobArray[1] = miscBlobs[1];
-        blobHashmap.Add(2, blobArray[1]);
+        blobHashmap.Add(1, blobArray[1]);
         
         miscBlobs[2] = blobManager.dummy;
         blobArray[2] = miscBlobs[2];
-        blobHashmap.Add(3, blobArray[2]);
+        blobHashmap.Add(2, blobArray[2]);
 
         
         
         var blobManagerSingleton = GetSingleton<BlobManager>();
         blobManagerSingleton.blobAssetReference = blobBuilder.CreateBlobAssetReference<BlobAssets>(Allocator.Persistent);
         SetSingleton(blobManagerSingleton);
+    }
+
+    protected override void OnDestroy()
+    {
+        blobArray.Dispose();
+        blobHashmap.Dispose();
     }
 }

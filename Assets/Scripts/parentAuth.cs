@@ -23,6 +23,8 @@ public class parentAuth : MonoBehaviour, IConvertGameObjectToEntity
         dstManager.AddComponent<ParentTag>(entity);
         dstManager.AddComponent<SaveTag>(entity);
         dstManager.AddComponent<dataComponent>(entity);
+        dstManager.AddComponent<shitComponent>(entity);
+        dstManager.AddBuffer<dataComponentBuffer>(entity);
 
     }
 }

@@ -37,7 +37,9 @@ public class serializtaionTesterAuth : MonoBehaviour, IConvertGameObjectToEntity
 
         dstManager.AddComponentData(entity, new SaveTag());
         dstManager.AddComponent<dataComponent>(entity);
+        dstManager.AddComponent<shitComponent>(entity);
         dstManager.AddComponent<SaveTag>(entity);
-       // dstManager.AddComponent<SetParentTag>(entity);
+        dstManager.AddComponent<SetParentTag>(entity);
+        dstManager.AddBuffer<dataComponentBuffer>(entity);
     }
 }

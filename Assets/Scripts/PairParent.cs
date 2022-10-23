@@ -30,7 +30,7 @@ public partial class PairParent : SystemBase
         Debug.Log("Setting parents");
         var entQuery = EntityManager.CreateEntityQuery(typeof(ParentTag)).ToEntityArray(Allocator.Temp);
         
-        Entities.WithAll<SetParentTag>().ForEach((Entity ent, dataComponent dat) =>
+        Entities.WithAll<SetParentTag>().ForEach((Entity ent, ref dataComponent dat) =>
         {
             var randIndex = Random.Range(0, entQuery.Length);
             
