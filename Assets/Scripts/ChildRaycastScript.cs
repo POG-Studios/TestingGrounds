@@ -36,9 +36,9 @@ public class ChildRaycastScript : MonoBehaviour
         for (int i = 0; i < childComponentArray.Length; i++)
         {
             Debug.Log($"PARENT ENT {childComponentArray[i].parentEnt}");
-            var parentPos = em.GetComponentData<Translation>(childComponentArray[i].parentEnt);
+            var parentPos = em.GetComponentData<LocalToWorldTransform>(childComponentArray[i].parentEnt);
             
-            Debug.DrawLine(new Vector3(childComponentArray[i].pos.x, 0, childComponentArray[i].pos.y), parentPos.Value, Color.red, 5f);
+            Debug.DrawLine(new Vector3(childComponentArray[i].pos.x, 0, childComponentArray[i].pos.y), parentPos.Value.Position, Color.red, 5f);
         }
     }
 }

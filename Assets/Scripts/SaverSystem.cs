@@ -62,7 +62,7 @@ public partial class SaverSystem : SystemBase
                         using var queryEntities = query.ToEntityArray(Allocator.Temp);
                         
                         var tempComp = GetDynamicComponentTypeHandle(type.Type);
-                        using var chunks = query.CreateArchetypeChunkArray(Allocator.Temp);
+                        using var chunks = query.ToArchetypeChunkArray(Allocator.Temp);
                         
                         var entityHandle = GetEntityTypeHandle();
                         
@@ -158,7 +158,7 @@ public partial class SaverSystem : SystemBase
                         using var queryEntities = query.ToEntityArray(Allocator.Temp);
                         
                         var tempComp = GetDynamicComponentTypeHandle(type.Type);
-                        using var chunks = query.CreateArchetypeChunkArray(Allocator.Temp);
+                        using var chunks = query.ToArchetypeChunkArray(Allocator.Temp);
                         
                         var entityHandle = GetEntityTypeHandle();
 
@@ -298,7 +298,7 @@ public partial class SaverSystem : SystemBase
                         using var queryEntities = query.ToEntityArray(Allocator.Temp);
                         
                         var tempComp = GetDynamicComponentTypeHandle(type.Type);
-                        using var chunks = query.CreateArchetypeChunkArray(Allocator.Temp);
+                        using var chunks = query.ToArchetypeChunkArray(Allocator.Temp);
 
                         using var prefabKeyInfo = query.ToComponentDataArray<PrefabKeyInfo>(Allocator.Temp);
                         
@@ -370,7 +370,7 @@ public partial class SaverSystem : SystemBase
            //using var queryEntities = query.ToEntityArray(Allocator.Temp);
                         
            var typeHandle = GetDynamicComponentTypeHandle(type);
-           using var chunks = query.CreateArchetypeChunkArray(Allocator.Temp);
+           using var chunks = query.ToArchetypeChunkArray(Allocator.Temp);
            
            var writer = new BinaryWriter(File.Open(SavePath, FileMode.OpenOrCreate));
 
@@ -422,7 +422,7 @@ public partial class SaverSystem : SystemBase
            var typeIndex = reader.ReadInt32();
            var byteArrayLength = reader.ReadInt32();
            
-           var blobHashmap = World.GetOrCreateSystem<SetupBlobAssets>().blobHashmap;
+           var blobHashmap = World.GetOrCreateSystemManaged<SetupBlobAssets>().blobHashmap;
 
            for (int i = 0; i < numEnts; i++)
            {
@@ -456,7 +456,7 @@ public partial class SaverSystem : SystemBase
            //using var queryEntities = query.ToEntityArray(Allocator.Temp);
                         
            var tempComp = GetDynamicComponentTypeHandle(type);
-           using var chunks = query.CreateArchetypeChunkArray(Allocator.Temp);
+           using var chunks = query.ToArchetypeChunkArray(Allocator.Temp);
            
            var componentBytes = chunks[0].GetDynamicComponentDataArrayReinterpret<byte>(tempComp, typeInfo.ElementSize);
            
@@ -518,7 +518,7 @@ public partial class SaverSystem : SystemBase
 
                        var saveQueryEntKeys = saveQuery.ToComponentDataArray<PrefabKeyInfo>(Allocator.Temp);
                        
-                       var saveQueryChunks = saveQuery.CreateArchetypeChunkArray(Allocator.Temp);
+                       var saveQueryChunks = saveQuery.ToArchetypeChunkArray(Allocator.Temp);
                        
                        //this is the component header
                        writer.Write(type.StableTypeHash);
@@ -574,7 +574,7 @@ public partial class SaverSystem : SystemBase
                        using var saveQueryEnts = query.ToEntityArray(Allocator.Temp);
                         
                        var tempComp = GetDynamicComponentTypeHandle(type.Type);
-                       using var saveQueryChunks = query.CreateArchetypeChunkArray(Allocator.Temp);
+                       using var saveQueryChunks = query.ToArchetypeChunkArray(Allocator.Temp);
 
                        using var saveQueryEntKeys = query.ToComponentDataArray<PrefabKeyInfo>(Allocator.Temp);
 
@@ -634,7 +634,7 @@ public partial class SaverSystem : SystemBase
        {
            var reader = new BinaryReader(File.Open(SavePath, FileMode.OpenOrCreate));
            
-           var blobHashmap = World.GetOrCreateSystem<SetupBlobAssets>().blobHashmap;
+           var blobHashmap = World.GetOrCreateSystemManaged<SetupBlobAssets>().blobHashmap;
 
            var mapSeed = reader.ReadInt32();
            var totalNumSavedEntities = reader.ReadInt32();
@@ -682,7 +682,7 @@ public partial class SaverSystem : SystemBase
                };
                //get blank chunk datta from newly spawned Entities
                var newEntityQuery = EntityManager.CreateEntityQuery(newEntityQueryDesc);
-               var newEntityChunks = newEntityQuery.CreateArchetypeChunkArray(Allocator.Temp);
+               var newEntityChunks = newEntityQuery.ToArchetypeChunkArray(Allocator.Temp);
                var dynamicSavedTypeHandle = GetDynamicComponentTypeHandle(TypeManager.GetType(typeIndex));
                
                if (TypeManager.GetTypeInfo(typeIndex).Category == TypeManager.TypeCategory.ComponentData)
@@ -763,7 +763,7 @@ public partial class SaverSystem : SystemBase
 
                        var resetReferenceQuery = EntityManager.CreateEntityQuery(type.Type);
                        
-                       var resetReferenceQueryChunks = resetReferenceQuery.CreateArchetypeChunkArray(Allocator.Temp);
+                       var resetReferenceQueryChunks = resetReferenceQuery.ToArchetypeChunkArray(Allocator.Temp);
 
                        var typeHandle = GetDynamicComponentTypeHandle(type.Type);
 
@@ -804,7 +804,7 @@ public partial class SaverSystem : SystemBase
 
                        var resetReferenceQuery = EntityManager.CreateEntityQuery(type.Type);
                        
-                       var resetReferenceQueryChunks = resetReferenceQuery.CreateArchetypeChunkArray(Allocator.Temp);
+                       var resetReferenceQueryChunks = resetReferenceQuery.ToArchetypeChunkArray(Allocator.Temp);
                        var typeHandle = GetDynamicComponentTypeHandle(type.Type);
 
                        for (int i = 0; i < resetReferenceQueryChunks.Length; i++)
@@ -889,7 +889,7 @@ public partial class SaverSystem : SystemBase
            };
                         
            using var query = EntityManager.CreateEntityQuery(queryDesc);
-           using var chunks = query.CreateArchetypeChunkArray(Allocator.Temp);
+           using var chunks = query.ToArchetypeChunkArray(Allocator.Temp);
 
            
            //var chunksData = chunks.Reinterpret<byte>();
@@ -947,7 +947,7 @@ public partial class SaverSystem : SystemBase
                         using var queryEntities = query.ToEntityArray(Allocator.Temp);
                         
                         var tempComp = GetDynamicComponentTypeHandle(type.Type);
-                        using var chunks = query.CreateArchetypeChunkArray(Allocator.Temp);
+                        using var chunks = query.ToArchetypeChunkArray(Allocator.Temp);
 
                         using var prefabKeyInfo = query.ToComponentDataArray<PrefabKeyInfo>(Allocator.Temp);
                         
@@ -1074,7 +1074,7 @@ public partial class SaverSystem : SystemBase
 
         var binaryFormatter = new BinaryFormatter();
         
-        var blobHashmap = World.GetOrCreateSystem<SetupBlobAssets>().blobHashmap;
+        var blobHashmap = World.GetOrCreateSystemManaged<SetupBlobAssets>().blobHashmap;
 
         using (BinaryReader reader = new BinaryReader(File.Open(SavePath, FileMode.OpenOrCreate)))
         {
@@ -1146,7 +1146,7 @@ public partial class SaverSystem : SystemBase
                     
                     //EntityManager.SetComponentData<object>(EntityManager, tempEnt, entityData);
                     EntityManager.SetComponentData(tempEnt, entityData);
-                    EntityManager.SetComponentData(tempEnt, new Translation(){ Value = new float3(entityData.pos.x, 0, entityData.pos.y)});
+                    EntityManager.SetComponentData(tempEnt, new LocalToWorldTransform{ Value = new UniformScaleTransform { Position = new float3(entityData.pos.x, 0, entityData.pos.y)}});
                     
                     
                 }
@@ -1155,7 +1155,7 @@ public partial class SaverSystem : SystemBase
 
                     var loadedEnt = entityRemap[entityID];
                     EntityManager.SetComponentData(loadedEnt, entityData);
-                    EntityManager.SetComponentData(loadedEnt, new Translation(){ Value = new float3(entityData.pos.x, 0, entityData.pos.y)});
+                    EntityManager.SetComponentData(loadedEnt, new LocalToWorldTransform{ Value = new UniformScaleTransform { Position = new float3(entityData.pos.x, 0, entityData.pos.y)}});
 
                 }
                 
@@ -1176,7 +1176,7 @@ public partial class SaverSystem : SystemBase
     {
         Debug.Log("Loading game in binary...");
         
-        var blobHashmap = World.GetOrCreateSystem<SetupBlobAssets>().blobHashmap;
+        var blobHashmap = World.GetOrCreateSystemManaged<SetupBlobAssets>().blobHashmap;
 
         using (BinaryReader reader = new BinaryReader(File.Open(SavePath, FileMode.OpenOrCreate)))
         {
@@ -1248,7 +1248,7 @@ public partial class SaverSystem : SystemBase
             }
 
             using var query = EntityManager.CreateEntityQuery(queryDesc);
-            var newChunkData =  query.CreateArchetypeChunkArray(Allocator.Temp);
+            var newChunkData =  query.ToArchetypeChunkArray(Allocator.Temp);
             var tempComp = GetDynamicComponentTypeHandle(componentType);
 
             for (var index = 0; index < newChunkData.Length; index++)
@@ -1279,7 +1279,7 @@ public partial class SaverSystem : SystemBase
     {
         Debug.Log("Loading game in binary...");
         
-        var blobHashmap = World.GetOrCreateSystem<SetupBlobAssets>().blobHashmap;
+        var blobHashmap = World.GetOrCreateSystemManaged<SetupBlobAssets>().blobHashmap;
 
         using (BinaryReader reader = new BinaryReader(File.Open(SavePath, FileMode.OpenOrCreate)))
         {
@@ -1342,7 +1342,7 @@ public partial class SaverSystem : SystemBase
             };
                         
             using var query = EntityManager.CreateEntityQuery(queryDesc);
-            var newChunkData =  query.CreateArchetypeChunkArray(Allocator.Temp);
+            var newChunkData =  query.ToArchetypeChunkArray(Allocator.Temp);
 
             foreach (var chunk in newChunkData)
             {
@@ -1379,14 +1379,14 @@ public partial class SaverSystem : SystemBase
 
         var remapper = new NativeParallelHashMap<int2, Entity>(500, Allocator.Temp);
 
-        var blobHashmap = World.GetOrCreateSystem<SetupBlobAssets>().blobHashmap;
+        var blobHashmap = World.GetOrCreateSystemManaged<SetupBlobAssets>().blobHashmap;
 
         foreach (var item in saveData.saveDat)
         {
             //Debug.Log($"entity position {item.pos}");
 
             var tempEnt = EntityManager.Instantiate(blobHashmap[(int)item.entityType]);
-            EntityManager.SetComponentData(tempEnt, new Translation(){Value = new float3(item.pos.x, 0, item.pos.y)});
+            EntityManager.SetComponentData(tempEnt, new LocalToWorldTransform(){Value = new UniformScaleTransform{ Position = new float3(item.pos.x, 0, item.pos.y)}});
             EntityManager.SetComponentData(tempEnt, new dataComponent(){ entityType = item.entityType, pos = item.pos, floatData = item.floatData, intData = item.intData, parentEnt = item.parentEnt,previousIndexNum = item.previousIndexNum, previousParentIndexNum = item.previousParentIndexNum});
             if (item.entityType == Types.EntityType.Child)
             {

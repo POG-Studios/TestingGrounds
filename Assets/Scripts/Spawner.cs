@@ -36,11 +36,8 @@ public class Spawner : MonoBehaviour
     public void Spawn()
     {
         Debug.Log("Spawning...");
-        var blobs = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<SetupBlobAssets>().blobArray;
-        var ecbSystem =
-            World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
-        var ecb = ecbSystem.CreateCommandBuffer();
-
+        var blobs = World.DefaultGameObjectInjectionWorld.GetOrCreateSystemManaged<SetupBlobAssets>().blobArray;
+        
         var em = World.DefaultGameObjectInjectionWorld.EntityManager;
 
         List<Entity> tempList = new List<Entity>();
@@ -59,7 +56,9 @@ public class Spawner : MonoBehaviour
             var randZ = Random.Range(0, 1000);
             var randY = Random.Range(0, 1000);
             
-            em.SetComponentData(tempEnt, new Translation{ Value = new float3(randX, 0, randZ)});
+        //    em.SetComponentData(tempEnt, new Translation{ Value = new float3(randX, 0, randZ)});
+        
+        
             em.SetComponentData(tempEnt, new PrefabKeyInfo() {prefabKey = 0});
             //em.SetComponentData(tempEnt, new ParentData(){entityType = Types.EntityType.Parent, randomNum = randY});
             em.SetComponentData(tempEnt, new dataComponent(){entityType = Types.EntityType.Parent, intData = randY, pos = new int2(randX, randZ), floatData = randX});
@@ -73,7 +72,7 @@ public class Spawner : MonoBehaviour
             var randX = Random.Range(0, 1000);
             var randZ = Random.Range(0, 1000);
             
-            em.SetComponentData(tempEnt, new Translation{ Value = new float3(randX, 0, randZ)});
+      //      em.SetComponentData(tempEnt, new Translation{ Value = new float3(randX, 0, randZ)});
 
             em.AddComponent<ChildTag>(tempEnt);
             
@@ -120,6 +119,7 @@ public class Spawner : MonoBehaviour
     {
         yield return null;
         
-        World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<PairParent>().SetParents();
+        World.DefaultGameObjectInjectionWorld.GetOrCreateSystemManaged<PairParent>().SetParents();
+      //  var shit = World.DefaultGameObjectInjectionWorld.GetOrCreateSystemManaged<PairParent>();
     }
 }

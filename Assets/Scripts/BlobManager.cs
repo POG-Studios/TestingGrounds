@@ -4,7 +4,7 @@ using System.ComponentModel;
 using UnityEngine;
 using Unity.Entities;
 
-[GenerateAuthoringComponent]
+
 public struct BlobManager : IComponentData
 {
     public BlobAssetReference<BlobAssets> blobAssetReference;

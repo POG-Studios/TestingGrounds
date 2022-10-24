@@ -1,7 +1,7 @@
 
 using Unity.Entities;
 
-[GenerateAuthoringComponent]
+
 [SaveComponent]
 public struct EntID : IComponentData
 {

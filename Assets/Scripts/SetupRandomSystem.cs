@@ -8,11 +8,11 @@ public partial class SetUpRandomSystem : SystemBase
     private EndSimulationEntityCommandBufferSystem _endSimECB;
     protected override void OnCreate()
     {
-        _endSimECB = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+    //    _endSimECB = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
     }
     protected override void OnUpdate()
     {
-        var ecbSim = _endSimECB.CreateCommandBuffer();
+        /*var ecbSim = _endSimECB.CreateCommandBuffer();
         Entities
             .WithAll<InitializeRandomDataTag>()
             .ForEach((Entity entity, ref RandomData randomData) =>
@@ -23,7 +23,7 @@ public partial class SetUpRandomSystem : SystemBase
                 
                 EntityManager.RemoveComponent<InitializeRandomDataTag>(entity);
             }).WithStructuralChanges().WithoutBurst().Run();
-        _endSimECB.AddJobHandleForProducer(this.Dependency);
+        _endSimECB.AddJobHandleForProducer(this.Dependency);*/
     }
     
 }
